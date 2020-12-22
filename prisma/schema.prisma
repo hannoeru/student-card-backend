@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name      String
+  email     String   @unique
+  password  String?
+  avatar    String?
+  members   Member[]
+  oauth     OAuth[]
+
+  @@map("users")
+}
+
+model OAuth {
+  id           String  @id @default(cuid())
+  provider     String
+  accessToken  String?
+  refreshToken String?
+  oauthUserId  String  @unique @map("oauth_user_id")
+  user         User    @relation(fields: [userId], references: [id])
+  userId       String  @map("user_id")
+
+  @@map("oauths")
+}
+
+model Member {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @map("user_id")
+  group     Group?   @relation(fields: [groupId], references: [id])
+  groupId   String?  @map("team_id")
+  role      String   @default("user")
+
+  @@map("members")
+}
+
+model Group {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name      String
+  members   Member[]
+
+  @@map("groups")
+}
