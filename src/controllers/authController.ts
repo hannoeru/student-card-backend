@@ -3,6 +3,7 @@ import { prisma } from '@/prisma'
 import { hashPassword, matchPassword } from '@/lib'
 import { ModelUser } from '@/db.types'
 import { createSecureToken } from '@/auth'
+import { Controller } from '@/controller.types'
 
 interface NewAccountArgs {
   studentNumber: string
@@ -15,7 +16,8 @@ interface LoginArgs {
   email: string
   password: string
 }
-const userLogin = async(req: Request, res: Response, next: NextFunction) => {
+
+const userLogin: Controller = async(req, res, next) => {
   const {
     email,
     password,
@@ -37,7 +39,7 @@ const userLogin = async(req: Request, res: Response, next: NextFunction) => {
     })
   }
 }
-const createNewAccount = async(req: Request, res: Response, next: NextFunction) => {
+const createNewAccount: Controller = async(req, res, next) => {
   const {
     studentNumber,
     studentName,
@@ -60,7 +62,11 @@ const createNewAccount = async(req: Request, res: Response, next: NextFunction) 
   sendTokenResponse(user, res)
 }
 
-export async function sendTokenResponse(
+const logout = async() => {
+
+}
+
+async function sendTokenResponse(
   user: ModelUser,
   res: Response,
 ) {

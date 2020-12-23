@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
+import { Controller } from '@/controller.types'
 
-const showMyStudentCard = async(req: Request, res: Response, next: NextFunction) => {
+const showMyStudentCard: Controller = async(req, res, next) => {
 
 }
 
