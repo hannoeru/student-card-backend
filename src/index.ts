@@ -1,4 +1,4 @@
-import express, { Application } from 'express'
+import express from 'express'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser'
@@ -9,7 +9,7 @@ dotenv.config()
 
 const PORT = process.env.PORT || 8000
 
-const app: Application = express()
+const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
