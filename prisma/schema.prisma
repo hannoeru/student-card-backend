@@ -16,6 +16,9 @@ model User {
   updatedAt       DateTime          @updatedAt @map("updated_at")
   name            String
   email           String            @unique
+  birthdate       DateTime
+  studentName     String
+  studentNumber   String            @unique
   password        String?
   avatar          String?
   members         Member[]
