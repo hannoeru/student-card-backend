@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:12-alpine
+    container_name: myapp-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    networks:
+      - myapp
+    ports:
+      - '${DB_PORT}:5432'
+
+networks:
+  myapp:
+    driver: bridge
