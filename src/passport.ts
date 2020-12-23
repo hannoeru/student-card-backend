@@ -6,67 +6,69 @@ import { Strategy as TwitterStrategy } from 'passport-twitter'
 import { createSecureToken } from './auth'
 import { prisma } from './prisma'
 
-passport.serializeUser<any, string>((user, done) => {
-  done(null, user.id)
-})
+export function initPassport() {
+  passport.serializeUser<any, string>((user, done) => {
+    done(null, user.id)
+  })
 
-passport.deserializeUser<any, string>((id, done) => {
-  prisma.user
-    .findUnique({
-      where: {
-        id,
+  passport.deserializeUser<any, string>((id, done) => {
+    prisma.user
+      .findUnique({
+        where: {
+          id,
+        },
+      })
+      .then((user) => {
+        done(null, user)
+      })
+      .catch((error) => {
+        console.log(`Error: ${error}`)
+      })
+  })
+
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: `${process.env.PUBLIC_URL}/api/v1/auth/google/callback`,
       },
-    })
-    .then((user) => {
-      done(null, user)
-    })
-    .catch((error) => {
-      console.log(`Error: ${error}`)
-    })
-})
+      async(accessToken, refreshToken, profile, cb) => {
+        const user = await getUserByProviderProfile(accessToken, refreshToken, profile, 'google')
+        cb(null, user)
+      },
+    ),
+  )
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `${process.env.PUBLIC_URL}/api/v1/auth/google/callback`,
-    },
-    async(accessToken, refreshToken, profile, cb) => {
-      const user = await getUserByProviderProfile(accessToken, refreshToken, profile, 'google')
-      cb(null, user)
-    },
-  ),
-)
+  passport.use(
+    new TwitterStrategy(
+      {
+        consumerKey: process.env.TWITTER_CONSUMER_KEY,
+        consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+        callbackURL: `${process.env.PUBLIC_URL}/api/v1/auth/twitter/callback`,
+        includeEmail: true,
+      },
+      async(accessToken, refreshToken, profile, cb) => {
+        const user = await getUserByProviderProfile(accessToken, refreshToken, profile, 'twitter')
+        cb(null, user)
+      },
+    ),
+  )
 
-passport.use(
-  new TwitterStrategy(
-    {
-      consumerKey: process.env.TWITTER_CONSUMER_KEY,
-      consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-      callbackURL: `${process.env.PUBLIC_URL}/api/v1/auth/twitter/callback`,
-      includeEmail: true,
-    },
-    async(accessToken, refreshToken, profile, cb) => {
-      const user = await getUserByProviderProfile(accessToken, refreshToken, profile, 'twitter')
-      cb(null, user)
-    },
-  ),
-)
-
-passport.use(
-  new GitHubStrategy(
-    {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: `${process.env.PUBLIC_URL}/api/v1/auth/github/callback`,
-    },
-    async(accessToken, refreshToken, profile, cb) => {
-      const user = await getUserByProviderProfile(accessToken, refreshToken, profile, 'github')
-      cb(null, user)
-    },
-  ),
-)
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: `${process.env.PUBLIC_URL}/api/v1/auth/github/callback`,
+      },
+      async(accessToken, refreshToken, profile, cb) => {
+        const user = await getUserByProviderProfile(accessToken, refreshToken, profile, 'github')
+        cb(null, user)
+      },
+    ),
+  )
+}
 
 async function getUserByProviderProfile(
   accessToken: string,
