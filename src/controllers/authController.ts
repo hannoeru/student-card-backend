@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { prisma } from '@/prisma'
-import { hashPassword } from '@/lib'
+import { hashPassword,matchPassword} from '@/lib'
 import { ModelUser } from '@/db.types'
 import { createSecureToken } from '@/auth'
 
@@ -8,19 +8,40 @@ interface NewAccountArgs {
   studentNumber: string
   studentName: string
   birthdate: Date
-  username: string
+  email: string
   password: string
 }
-
+interface LoginArgs {
+  email:string
+  password:string
+}
 const userLogin = async(req: Request, res: Response, next: NextFunction) => {
-
+  const{
+    email,
+    password,
+  } = req.body as LoginArgs
+  
+  const savedUser = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  })
+  const isPaswordMatched = matchPassword(password,savedUser.password)
+  if(isPaswordMatched){
+    sendTokenResponse(savedUser, res)
+  } else {
+    res.status(404).json({
+      success:false,
+      message:"ログインできませんでした"
+    })
+  }
 }
 const createNewAccount = async(req: Request, res: Response, next: NextFunction) => {
   const {
     studentNumber,
     studentName,
     birthdate,
-    username,
+    email,
     password,
   } = req.body as NewAccountArgs
 
@@ -31,7 +52,7 @@ const createNewAccount = async(req: Request, res: Response, next: NextFunction) 
       studentNumber,
       studentName,
       birthdate,
-      username,
+      email,
       password: hashedPassword,
     },
   })
