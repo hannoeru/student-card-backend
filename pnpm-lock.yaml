@@ -1,10 +1,12 @@
 dependencies:
   '@prisma/client': 2.13.1_@prisma+cli@2.13.1
   cookie-parser: 1.4.5
+  cors: 2.8.5
   dayjs: 1.9.7
   dotenv: 8.2.0
   express: 4.17.1
   helmet: 4.2.0
+  hpp: 0.2.3
   jsonwebtoken: 8.5.1
   morgan: 1.10.0
   passport: 0.4.1
@@ -15,12 +17,15 @@ devDependencies:
   '@antfu/eslint-config-ts': 0.4.3_eslint@7.16.0+typescript@4.1.3
   '@prisma/cli': 2.13.1
   '@types/cookie-parser': 1.4.2
+  '@types/cors': 2.8.9
   '@types/express': 4.17.9
+  '@types/hpp': 0.2.1
   '@types/jsonwebtoken': 8.5.0
   '@types/morgan': 1.9.2
   '@types/node': 14.14.14
   '@types/passport-github': 1.1.5
   '@types/passport-google-oauth20': 2.0.5
+  '@types/passport-twitter': 1.0.36
   eslint: 7.16.0
   esno: 0.3.0
   nodemon: 2.0.6
@@ -253,6 +258,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-uwcY8m6SDQqciHsqcKDGbo10GdasYsPCYkH3hVegj9qAah6pX5HivOnOuI3WYmyQMnOATV39zv/Ybs0bC/6iVg==
+  /@types/cors/2.8.9:
+    dev: true
+    resolution:
+      integrity: sha512-zurD1ibz21BRlAOIKP8yhrxlqKx6L9VCwkB5kMiP6nZAhoF5MvC7qS1qPA7nRcr1GJolfkQC7/EAL4hdYejLtg==
   /@types/express-serve-static-core/4.17.17:
     dependencies:
       '@types/node': 14.14.14
@@ -270,6 +279,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-SDzEIZInC4sivGIFY4Sz1GG6J9UObPwCInYJjko2jzOf/Imx/dlpume6Xxwj1ORL82tBbmN4cPDIDkLbWHk9hw==
+  /@types/hpp/0.2.1:
+    dependencies:
+      '@types/express': 4.17.9
+    dev: true
+    resolution:
+      integrity: sha512-+46c8i+nXpoJn8GJnZTvZUfggz4bKOlTtEXIxWTFb7xZI9onahMUnZ+xNdjc4vzSM/zUaUYtuEsY8ysgv68rXQ==
   /@types/json-schema/7.0.6:
     dev: true
     resolution:
@@ -332,6 +347,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-QP0q+NVQOaIu2r0e10QWkiUA0Ya5mOBHRJN0UrI+LolMLOP1/VN4EVIpJ3xVwFo+xqNFRoFvFwJhBvKnk7kpUA==
+  /@types/passport-twitter/1.0.36:
+    dependencies:
+      '@types/express': 4.17.9
+      '@types/passport': 1.0.4
+    dev: true
+    resolution:
+      integrity: sha512-DeOicHcgxkUcW1d33VQbhaQikXfWiGcF5AOGjG/DPzIFdTZUYbuTEoeuK7k42ZRd9rrqdN5qe9Ry39lls00R3Q==
   /@types/passport/1.0.4:
     dependencies:
       '@types/express': 4.17.9
@@ -872,6 +894,15 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==
+  /cors/2.8.5:
+    dependencies:
+      object-assign: 4.1.1
+      vary: 1.1.2
+    dev: false
+    engines:
+      node: '>= 0.10'
+    resolution:
+      integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
   /create-require/1.1.1:
     dev: true
     resolution:
@@ -1759,6 +1790,15 @@ packages:
     dev: true
     resolution:
       integrity: sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
+  /hpp/0.2.3:
+    dependencies:
+      lodash: 4.17.20
+      type-is: 1.6.18
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-4zDZypjQcxK/8pfFNR7jaON7zEUpXZxz4viyFmqjb3kWNWAHsLEUmWXcdn25c5l76ISvnD6hbOGO97cXUI3Ryw==
   /htmlparser2/5.0.1:
     dependencies:
       domelementtype: 2.1.0
@@ -2188,7 +2228,6 @@ packages:
     resolution:
       integrity: sha1-7GZi5IlkCO1KtsVCo5kLcswIACA=
   /lodash/4.17.20:
-    dev: true
     resolution:
       integrity: sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
   /lowercase-keys/1.0.1:
@@ -2388,6 +2427,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-vR/vr2hslrdUda7VGWQS/2DPucE=
+  /object-assign/4.1.1:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
   /object-inspect/1.9.0:
     dev: true
     resolution:
@@ -3431,19 +3476,24 @@ specifiers:
   '@prisma/cli': ^2.13.1
   '@prisma/client': ^2.13.1
   '@types/cookie-parser': ^1.4.2
+  '@types/cors': ^2.8.9
   '@types/express': ^4.17.9
+  '@types/hpp': ^0.2.1
   '@types/jsonwebtoken': ^8.5.0
   '@types/morgan': ^1.9.2
   '@types/node': ^14.14.14
   '@types/passport-github': ^1.1.5
   '@types/passport-google-oauth20': ^2.0.5
+  '@types/passport-twitter': ^1.0.36
   cookie-parser: ^1.4.5
+  cors: ^2.8.5
   dayjs: ^1.9.7
   dotenv: ^8.2.0
   eslint: ^7.16.0
   esno: ^0.3.0
   express: ^4.17.1
   helmet: ^4.2.0
+  hpp: ^0.2.3
   jsonwebtoken: ^8.5.1
   morgan: ^1.10.0
   nodemon: ^2.0.6
