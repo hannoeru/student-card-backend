@@ -26,8 +26,8 @@ const userLogin = async(req: Request, res: Response, next: NextFunction) => {
       email,
     },
   })
-  const isPaswordMatched = matchPassword(password, savedUser.password)
-  if (isPaswordMatched) {
+  const isPasswordMatched = matchPassword(password, savedUser.password)
+  if (isPasswordMatched) {
     sendTokenResponse(savedUser, res)
   }
   else {
