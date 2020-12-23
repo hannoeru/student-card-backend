@@ -11,15 +11,17 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  name      String
-  email     String   @unique
-  password  String?
-  avatar    String?
-  members   Member[]
-  oauth     OAuth[]
+  id              String            @id @default(cuid())
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  name            String
+  email           String            @unique
+  password        String?
+  avatar          String?
+  members         Member[]
+  oauth           OAuth[]
+  officialAbsence OfficialAbsence[]
+  book            Book[]
 
   @@map("users")
 }
@@ -57,4 +59,49 @@ model Group {
   members   Member[]
 
   @@map("groups")
+}
+
+model OfficialAbsence {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @map("user_id")
+  class     String
+  dateTime  DateTime @map("date_time")
+  reason    String
+
+  @@map("official_absences")
+}
+
+model Book {
+  id           String    @id @default(cuid())
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  user         User      @relation(fields: [userId], references: [id])
+  userId       String    @map("user_id")
+  title        String
+  introduction String
+  imageUrl     String    @map("image_url")
+  tags         BookTag[] @relation("book_tags")
+
+  @@map("books")
+}
+
+model BookTag {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name      String
+  slug      String
+  books     Book[]   @relation("book_tags")
+
+  @@map("book_tags")
+}
+
+model Schedule {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  schedule  String
 }
