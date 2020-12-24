@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import { installPlugins } from '@/plugins'
 import { registerRoutes } from '@/routes'
 import { passport, initPassport } from '@/passport'
-import { errorHandler } from '@/middleware/errorHandler'
+import { errorHandler } from '@/middleware'
 
 dotenv.config()
 

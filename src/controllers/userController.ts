@@ -1,7 +1,6 @@
-import { Request, Response, NextFunction } from 'express'
-import { Controller } from '@/controller.types'
+import { RequestHandler } from 'express'
 
-const showMyStudentCard: Controller = async(req, res, next) => {
+const showMyStudentCard: RequestHandler = async(req, res, next) => {
 
 }
 

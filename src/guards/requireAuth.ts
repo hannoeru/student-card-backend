@@ -1,13 +1,12 @@
-import { Request, Response, NextFunction } from 'express'
+import { RequestHandler } from 'express'
 import { parseSecureToken } from '@/auth'
 import { ModelMember, ModelUser } from '@/db.types'
 import { prisma } from '@/prisma'
-import { Controller } from '@/controller.types'
 import { ErrorResponse } from '../lib'
 
 export type ModelUserWithMembers = ModelUser & { members: ModelMember[] }
 
-export const requireAuth: Controller = async(req, res, next): Promise<void> => {
+export const requireAuth: RequestHandler = async(req, res, next): Promise<void> => {
   const token = req.cookies[process.env.AUTH_COOKIE_NAME]
   if (!token)
     return next(new ErrorResponse('Please provide an auth token'))

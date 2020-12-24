@@ -1,9 +1,8 @@
-import { Request, Response, NextFunction } from 'express'
+import { RequestHandler } from 'express'
 import { prisma } from '@/prisma'
 import { hashPassword, matchPassword } from '@/lib'
 import { ModelUser } from '@/db.types'
 import { createSecureToken } from '@/auth'
-import { Controller } from '@/controller.types'
 
 interface NewAccountArgs {
   studentNumber: string
@@ -17,7 +16,7 @@ interface LoginArgs {
   password: string
 }
 
-const userLogin: Controller = async(req, res, next) => {
+const userLogin: RequestHandler = async(req, res, next) => {
   const {
     email,
     password,
@@ -29,17 +28,14 @@ const userLogin: Controller = async(req, res, next) => {
     },
   })
   const isPasswordMatched = matchPassword(password, savedUser.password)
-  if (isPasswordMatched) {
-    sendTokenResponse(savedUser, res)
-  }
-  else {
-    res.status(404).json({
-      success: false,
-      message: 'ログインできませんでした',
-    })
-  }
+
+  if (!isPasswordMatched)
+    return next(new ErrorResponse('Invalid credentials', 401))
+
+  sendTokenResponse(savedUser, res)
 }
-const createNewAccount: Controller = async(req, res, next) => {
+
+const createNewAccount: RequestHandler = async(req, res, next) => {
   const {
     studentNumber,
     studentName,
