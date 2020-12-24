@@ -1,8 +1,7 @@
 import { RequestHandler } from 'express'
-import { parseSecureToken } from '@/auth'
 import { ModelMember, ModelUser } from '@/db.types'
 import { prisma } from '@/prisma'
-import { ErrorResponse } from '../lib'
+import { ErrorResponse, parseSecureToken } from '@/lib'
 
 export const requireAuth: RequestHandler = async(req, res, next): Promise<void> => {
   let token

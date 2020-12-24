@@ -1,5 +1,5 @@
 import { Response } from 'express'
-import { createSecureToken } from '@/auth'
+import { createSecureToken } from '@/lib/auth'
 
 export async function sendTokenResponse(
   userId: string,

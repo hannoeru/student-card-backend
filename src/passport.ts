@@ -4,7 +4,6 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { Strategy as GitHubStrategy } from 'passport-github'
 import { Strategy as TwitterStrategy } from 'passport-twitter'
 import { sendTokenResponse } from '@/lib'
-import { createSecureToken } from './auth'
 import { prisma } from './prisma'
 
 export function initPassport() {
