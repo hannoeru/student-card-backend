@@ -4,6 +4,6 @@ import { requireAuth } from '../guards/requireAuth'
 
 const router = Router()
 
-router.use('/me', requireAuth, userData)
+router.get('/me', requireAuth, userData)
 
 export default router
