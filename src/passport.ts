@@ -125,6 +125,9 @@ async function getUserByProviderProfile(
     userExisting = await prisma.user.create({
       data: {
         email,
+        birthdate: '',
+        studentName: '',
+        studentNumber: '',
         name: profile.displayName || profile.username,
         avatar,
       },
