@@ -3,6 +3,7 @@ import passport, { Profile } from 'passport'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { Strategy as GitHubStrategy } from 'passport-github'
 import { Strategy as TwitterStrategy } from 'passport-twitter'
+import { sendTokenResponse } from '@/lib'
 import { createSecureToken } from './auth'
 import { prisma } from './prisma'
 
@@ -171,14 +172,5 @@ export async function handleSuccessfulLogin(
   res: Response,
 ) {
   const { id } = (req as any).user
-  const authToken = createSecureToken({
-    userId: id,
-  })
-  res.cookie(process.env.AUTH_COOKIE_NAME, authToken, {
-    path: '/',
-    httpOnly: true,
-    sameSite: 'lax',
-    maxAge: 60 * 60 * 24 * 365, // A year
-  })
-  res.redirect('/api/v1/user/me')
+  sendTokenResponse(id, res)
 }
