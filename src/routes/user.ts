@@ -1,12 +1,9 @@
 import { Router } from 'express'
+import { userData } from '@/controllers/userController'
 import { requireAuth } from '../guards/requireAuth'
 
 const router = Router()
 
-router.use('/me', requireAuth, (req, res, next) => {
-  res.json({
-    message: 'protected',
-  })
-})
+router.use('/me', requireAuth, userData)
 
 export default router
