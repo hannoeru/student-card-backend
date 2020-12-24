@@ -17,6 +17,8 @@ const userData: RequestHandler = async(req, res, next) => {
   if (!user)
     return next(new ErrorResponse('User not found', 404))
 
+  delete user.password
+
   res.status(200).json({
     success: true,
     user,
