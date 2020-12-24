@@ -1,7 +1,13 @@
 import { Router } from 'express'
-import { handleSuccessfulLogin, passport } from '../passport'
+import { userLogin, logout, createNewAccount } from '@/controllers/authController'
+import { handleSuccessfulLogin, passport } from '@/passport'
+import { requireAuth } from '../guards/requireAuth'
 
 const router = Router()
+
+router.post('/register', createNewAccount)
+router.post('/login', userLogin)
+router.post('/logout', requireAuth, logout)
 
 router.get('/github',
   passport.authenticate('github', {

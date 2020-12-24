@@ -1,12 +1,12 @@
-import { RequestHandler } from 'express'
+import { RequestHandler, Response } from 'express'
 import { prisma } from '@/prisma'
-import { hashPassword, matchPassword } from '@/lib'
+import { hashPassword, matchPassword, ErrorResponse } from '@/lib'
 import { ModelUser } from '@/db.types'
 import { createSecureToken } from '@/auth'
 
 interface NewAccountArgs {
   studentNumber: string
-  studentName: string
+  name: string
   birthdate: Date
   email: string
   password: string
@@ -38,7 +38,7 @@ const userLogin: RequestHandler = async(req, res, next) => {
 const createNewAccount: RequestHandler = async(req, res, next) => {
   const {
     studentNumber,
-    studentName,
+    name,
     birthdate,
     email,
     password,
@@ -49,7 +49,7 @@ const createNewAccount: RequestHandler = async(req, res, next) => {
   const user = await prisma.user.create({
     data: {
       studentNumber,
-      studentName,
+      name,
       birthdate,
       email,
       password: hashedPassword,
@@ -58,8 +58,13 @@ const createNewAccount: RequestHandler = async(req, res, next) => {
   sendTokenResponse(user, res)
 }
 
-const logout = async() => {
+const logout: RequestHandler = async(req, res, next) => {
+  res.clearCookie(process.env.AUTH_COOKIE_NAME, { path: '/' })
 
+  res.status(200).json({
+    success: true,
+    data: {},
+  })
 }
 
 async function sendTokenResponse(
@@ -79,6 +84,7 @@ async function sendTokenResponse(
 }
 
 export {
+  logout,
   userLogin,
   createNewAccount,
 }

@@ -5,7 +5,14 @@ import { prisma } from '@/prisma'
 import { ErrorResponse } from '../lib'
 
 export const requireAuth: RequestHandler = async(req, res, next): Promise<void> => {
-  const token = req.cookies[process.env.AUTH_COOKIE_NAME]
+  let token
+  const authHeader = req.headers.authorization
+
+  if (authHeader && authHeader.startsWith('Bearer'))
+    token = authHeader.split(' ')[1]
+  else
+    token = req.cookies[process.env.AUTH_COOKIE_NAME]
+
   if (!token)
     return next(new ErrorResponse('Please provide an auth token'))
 
