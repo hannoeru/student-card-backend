@@ -4,8 +4,6 @@ import { ModelMember, ModelUser } from '@/db.types'
 import { prisma } from '@/prisma'
 import { ErrorResponse } from '../lib'
 
-export type ModelUserWithMembers = ModelUser & { members: ModelMember[] }
-
 export const requireAuth: RequestHandler = async(req, res, next): Promise<void> => {
   const token = req.cookies[process.env.AUTH_COOKIE_NAME]
   if (!token)

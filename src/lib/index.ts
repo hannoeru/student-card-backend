@@ -1,2 +1,2 @@
-export { ErrorResponse } from './errorResponse'
+export * from './errorResponse'
 export * from './password'
