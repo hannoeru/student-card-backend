@@ -25,7 +25,7 @@ app.use(passport.session())
 installPlugins(app)
 registerRoutes(app)
 
-app.get('/ping', async(_req, res) => {
+app.get('/ping', async (_req, res) => {
   res.send({
     message: 'pong',
   })

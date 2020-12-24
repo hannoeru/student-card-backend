@@ -33,7 +33,7 @@ export function initPassport() {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackURL: `${process.env.PUBLIC_URL}/api/v1/auth/google/callback`,
       },
-      async(accessToken, refreshToken, profile, cb) => {
+      async (accessToken, refreshToken, profile, cb) => {
         const user = await getUserByProviderProfile(accessToken, refreshToken, profile, 'google')
         cb(null, user)
       },
@@ -48,7 +48,7 @@ export function initPassport() {
         callbackURL: `${process.env.PUBLIC_URL}/api/v1/auth/twitter/callback`,
         includeEmail: true,
       },
-      async(accessToken, refreshToken, profile, cb) => {
+      async (accessToken, refreshToken, profile, cb) => {
         const user = await getUserByProviderProfile(accessToken, refreshToken, profile, 'twitter')
         cb(null, user)
       },
@@ -62,7 +62,7 @@ export function initPassport() {
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
         callbackURL: `${process.env.PUBLIC_URL}/api/v1/auth/github/callback`,
       },
-      async(accessToken, refreshToken, profile, cb) => {
+      async (accessToken, refreshToken, profile, cb) => {
         const user = await getUserByProviderProfile(accessToken, refreshToken, profile, 'github')
         cb(null, user)
       },
@@ -117,8 +117,7 @@ async function getUserByProviderProfile(
         email,
       },
     })
-    if (userExisting)
-      oauthExisting = await createOAuthProfile(userExisting.id)
+    if (userExisting) oauthExisting = await createOAuthProfile(userExisting.id)
   }
 
   // If not found, create user and save oauth user id
@@ -146,10 +145,7 @@ async function getUserByProviderProfile(
   }
 
   // update token
-  if (
-    accessToken !== oauthExisting.accessToken
-    || refreshToken !== oauthExisting.refreshToken
-  ) {
+  if (accessToken !== oauthExisting.accessToken || refreshToken !== oauthExisting.refreshToken) {
     await prisma.oAuth.update({
       where: {
         id: oauthExisting.id,
@@ -166,10 +162,7 @@ async function getUserByProviderProfile(
 
 export { passport }
 
-export async function handleSuccessfulLogin(
-  req: Request,
-  res: Response,
-) {
+export async function handleSuccessfulLogin(req: Request, res: Response) {
   const { id } = (req as any).user
   const authToken = createSecureToken({
     userId: id,

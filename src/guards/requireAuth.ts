@@ -7,14 +7,12 @@ import { ErrorResponse } from '../lib'
 
 export type ModelUserWithMembers = ModelUser & { members: ModelMember[] }
 
-export const requireAuth: Controller = async(req, res, next): Promise<void> => {
+export const requireAuth: Controller = async (req, res, next): Promise<void> => {
   const token = req.cookies[process.env.AUTH_COOKIE_NAME]
-  if (!token)
-    return next(new ErrorResponse('Please provide an auth token'))
+  if (!token) return next(new ErrorResponse('Please provide an auth token'))
 
   const authUser = await parseSecureToken(token)
-  if (!authUser)
-    return next(new ErrorResponse('Authentication Error'))
+  if (!authUser) return next(new ErrorResponse('Authentication Error'))
 
   const user = await prisma.user.findUnique({
     where: { id: authUser.userId },
@@ -22,8 +20,7 @@ export const requireAuth: Controller = async(req, res, next): Promise<void> => {
       members: true,
     },
   })
-  if (!user)
-    return next(new ErrorResponse('User not found'))
+  if (!user) return next(new ErrorResponse('User not found'))
 
   req.user = user
   next()

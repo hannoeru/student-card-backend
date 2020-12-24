@@ -17,11 +17,8 @@ interface LoginArgs {
   password: string
 }
 
-const userLogin: Controller = async(req, res, next) => {
-  const {
-    email,
-    password,
-  } = req.body as LoginArgs
+const userLogin: Controller = async (req, res, next) => {
+  const { email, password } = req.body as LoginArgs
 
   const savedUser = await prisma.user.findUnique({
     where: {
@@ -31,22 +28,15 @@ const userLogin: Controller = async(req, res, next) => {
   const isPasswordMatched = matchPassword(password, savedUser.password)
   if (isPasswordMatched) {
     sendTokenResponse(savedUser, res)
-  }
-  else {
+  } else {
     res.status(404).json({
       success: false,
       message: 'ログインできませんでした',
     })
   }
 }
-const createNewAccount: Controller = async(req, res, next) => {
-  const {
-    studentNumber,
-    studentName,
-    birthdate,
-    email,
-    password,
-  } = req.body as NewAccountArgs
+const createNewAccount: Controller = async (req, res, next) => {
+  const { studentNumber, studentName, birthdate, email, password } = req.body as NewAccountArgs
 
   const hashedPassword = await hashPassword(password)
 
@@ -62,14 +52,9 @@ const createNewAccount: Controller = async(req, res, next) => {
   sendTokenResponse(user, res)
 }
 
-const logout = async() => {
+const logout = async () => {}
 
-}
-
-async function sendTokenResponse(
-  user: ModelUser,
-  res: Response,
-) {
+async function sendTokenResponse(user: ModelUser, res: Response) {
   const authToken = createSecureToken({
     userId: user.id,
   })
@@ -82,7 +67,4 @@ async function sendTokenResponse(
   res.status(200).json({ success: true, authToken })
 }
 
-export {
-  userLogin,
-  createNewAccount,
-}
+export { userLogin, createNewAccount }

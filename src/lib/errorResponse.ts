@@ -6,6 +6,4 @@ class ErrorResponse extends Error {
   }
 }
 
-export {
-  ErrorResponse,
-}
+export { ErrorResponse }

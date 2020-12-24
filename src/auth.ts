@@ -9,13 +9,10 @@ export function createSecureToken(payload: AuthUser) {
   return token
 }
 
-export async function parseSecureToken(
-  token: string,
-): Promise<AuthUser | null> {
+export async function parseSecureToken(token: string): Promise<AuthUser | null> {
   try {
     return jwt.verify(token, process.env.HASH_KEY) as AuthUser
-  }
-  catch (error) {
+  } catch (error) {
     console.error('auth error', error)
     return null
   }
