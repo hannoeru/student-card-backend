@@ -33,6 +33,10 @@ const userLogin: RequestHandler = async(req, res, next) => {
       password: true,
     },
   })
+
+  if (!savedUser)
+    return next(new ErrorResponse('Invalid credentials', 401))
+
   const isPasswordMatched = matchPassword(password, savedUser.password)
 
   if (!isPasswordMatched)
