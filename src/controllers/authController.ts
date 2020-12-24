@@ -22,6 +22,9 @@ const userLogin: RequestHandler = async(req, res, next) => {
     password,
   } = req.body as LoginArgs
 
+  if (!email || !password)
+    return next(new ErrorResponse('Please provide an email and password', 400))
+
   const savedUser = await prisma.user.findUnique({
     where: {
       email,
@@ -44,7 +47,8 @@ const createNewAccount: RequestHandler = async(req, res, next) => {
     password,
   } = req.body as NewAccountArgs
 
-  const hashedPassword = await hashPassword(password)
+  if (!studentNumber || !name || !birthdate || !email || !password)
+    return next(new ErrorResponse('Incorrect data format', 400))
 
   const user = await prisma.user.create({
     data: {
@@ -52,7 +56,7 @@ const createNewAccount: RequestHandler = async(req, res, next) => {
       name,
       birthdate,
       email,
-      password: hashedPassword,
+      password,
     },
   })
   sendTokenResponse(user, res)
