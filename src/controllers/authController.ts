@@ -28,6 +28,10 @@ const userLogin: RequestHandler = async(req, res, next) => {
     where: {
       email,
     },
+    select: {
+      id: true,
+      password: true,
+    },
   })
   const isPasswordMatched = matchPassword(password, savedUser.password)
 
