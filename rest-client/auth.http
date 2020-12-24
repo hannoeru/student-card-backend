@@ -1,0 +1,27 @@
+POST http://localhost:3000/api/v1/auth/register HTTP/1.1
+content-type: application/json
+
+{
+  "studentNumber": "20c1010002",
+  "name": "テストユーザー2",
+  "birthdate": "{{$datetime iso8601}}",
+  "email": "20c1010019rh@edu.tech.ac.jp",
+  "password": "password"
+}
+
+###
+
+POST http://localhost:3000/api/v1/auth/login HTTP/1.1
+content-type: application/json
+
+{
+  "email": "20c1010000rh@edu.tech.ac.jp",
+  "password": "password"
+}
+
+###
+
+POST http://localhost:3000/api/v1/auth/logout HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2oydHkyNWowMDA3bGgxYXBjc2s2bDh1IiwiaWF0IjoxNjA4ODEzMzc2fQ.nm-1mB6JmVn3zS4M60I5BJUel3fSM-FHIjPeEPn-NmM
+
+###
