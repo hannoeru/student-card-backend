@@ -36,6 +36,8 @@
     "@types/passport-github": "^1.1.5",
     "@types/passport-google-oauth20": "^2.0.5",
     "@types/passport-twitter": "^1.0.36",
+    "@typescript-eslint/eslint-plugin": "^4.11.0",
+    "@typescript-eslint/parser": "^4.11.0",
     "eslint": "^7.16.0",
     "esno": "^0.3.0",
     "nodemon": "^2.0.6",

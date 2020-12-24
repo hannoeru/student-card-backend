@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "es6",
     "lib": [
       "esnext"
     ],
@@ -11,8 +11,10 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
@@ -20,6 +22,7 @@
         "src/*"
       ]
     },
+    "typeRoots": ["src/@types", "node_modules/@types"],
   },
   "include": [
     "src/types.d.ts",
