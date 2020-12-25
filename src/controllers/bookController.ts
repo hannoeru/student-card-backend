@@ -6,39 +6,42 @@ interface AddBookArgs {
   title: string
   introduction: string
   imageUrl: string
+  tags:{
+    name: string
+    slug: string
+  }
 }
-interface BookTagArgs {
-  studentNumber: string
-  name: string
-}
-
 const addNewBook: RequestHandler = async(req, res, next) => {
   const {
     title,
     introduction,
     imageUrl,
+    tags,
   } = req.body as AddBookArgs
-  const tags = req.body as BookTagArgs　//これでいいのか？
-
-  if (!title || !introduction || !imageUrl)
+  if ( !title || !introduction || !imageUrl || !tags )
     return next(new ErrorResponse('Incorrect data format', 400))
-  //tagがある確認して無ければ追加したい
-  const tag = await prisma.bookTag.create({　//(.create)等のドキュメントが見当たらないので良くわからない
+  const tag = await prisma.bookTag.findFirst({
     where:{
-
-    },
-    data:{
-      
+      name: tags.name,
+      slug: tags.slug,
     },
   })
-  //追加とか終わったら書き込みたい
-  const book = await prisma.book.create({
+  if(!tag){
+    prisma.bookTag.create({
+      data: {
+        name: tags.name,
+        slug: tags.slug,
+      },
+    })
+  }
+  prisma.book.create({
     user:{
-      connect:{//連携？
-        //ユーザーidをres.user.idで取得?
+      connect:{
+        user: req.body.user,
+        userId: req.body.userId,
       },
     },
-    data: {//data:の意味(***:)はどう定義されているのか
+    data: {
       title,
       introduction,
       imageUrl,
