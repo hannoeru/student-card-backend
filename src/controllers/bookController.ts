@@ -1,6 +1,6 @@
 import { RequestHandler, Response } from 'express'
 import { prisma } from '@/prisma'
-import { hashPassword, matchPassword, ErrorResponse, sendTokenResponse } from '@/lib'
+import { ErrorResponse } from '@/lib'
 
 interface AddBookArgs {
   title: string
@@ -23,7 +23,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
   if (!title || !introduction || !imageUrl)
     return next(new ErrorResponse('Incorrect data format', 400))
   //tagがある確認して無ければ追加したい
-  const tag = await prisma.bookTag.create({　//.create等のドキュメントが見当たらないので良くわからない
+  const tag = await prisma.bookTag.create({　//(.create)等のドキュメントが見当たらないので良くわからない
     where:{
 
     },
@@ -35,10 +35,10 @@ const addNewBook: RequestHandler = async(req, res, next) => {
   const book = await prisma.book.create({
     user:{
       connect:{//連携？
-        //ユーザーid
+        //ユーザーidをres.user.idで取得?
       },
     },
-    data: {//data:の意味***:はどう定義されているのか
+    data: {//data:の意味(***:)はどう定義されているのか
       title,
       introduction,
       imageUrl,
