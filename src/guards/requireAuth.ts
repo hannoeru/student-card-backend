@@ -5,7 +5,7 @@ import { ErrorResponse, parseSecureToken } from '@/lib'
 
 export type ModelUserWithMembers = ModelUser & { members: ModelMember[] }
 
-export const requireAuth: RequestHandler = async(req, res, next): Promise<void> => {
+export const requireAuth: RequestHandler = async(req, res, next) => {
   let token
   const authHeader = req.headers.authorization
 
