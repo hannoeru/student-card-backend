@@ -1,16 +1,18 @@
 import { RequestHandler, Response } from 'express'
 import { prisma } from '@/prisma'
 import { ErrorResponse } from '@/lib'
+
 interface AddBookArgs {
   title: string
   introduction: string
   imageUrl: string
-  tags:{
-    id : string
+  tags: {
+    id: string
     name: string
     slug: string
   }
 }
+
 const addNewBook: RequestHandler = async(req, res, next) => {
   const {
     title,
@@ -18,14 +20,17 @@ const addNewBook: RequestHandler = async(req, res, next) => {
     imageUrl,
     tags,
   } = req.body as AddBookArgs
-  if ( !title || !introduction || !imageUrl || !tags )
+
+  if (!title || !introduction || !imageUrl || !tags)
     return next(new ErrorResponse('Incorrect data format', 400))
+
   let tag = await prisma.bookTag.findFirst({
-    where:{
+    where: {
       name: tags.name,
     },
   })
-  if(!tag){
+
+  if (!tag) {
     tag = await prisma.bookTag.create({
       data: {
         name: tags.name,
@@ -33,9 +38,10 @@ const addNewBook: RequestHandler = async(req, res, next) => {
       },
     })
   }
+
   prisma.book.create({
-    user:{
-      connect:{
+    user: {
+      connect: {
         id: req.body.userId,
       },
     },
@@ -44,9 +50,9 @@ const addNewBook: RequestHandler = async(req, res, next) => {
       introduction,
       imageUrl,
     },
-    tags:{
-      connect:{
-        id:tag.id,
+    tags: {
+      connect: {
+        id: tag.id,
       },
     },
   })
