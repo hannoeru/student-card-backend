@@ -1,6 +1,7 @@
 import { RequestHandler, Response } from 'express'
 import { prisma } from '@/prisma'
 import { ErrorResponse } from '@/lib'
+import slug from 'limax';
 interface AddBookArgs {
   title: string
   introduction: string
@@ -29,7 +30,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
     tag = await prisma.bookTag.create({
       data: {
         name: tags.name,
-        slug: tags.slug,
+        slug: slug(tags.name),
       },
     })
   }
@@ -49,6 +50,18 @@ const addNewBook: RequestHandler = async(req, res, next) => {
         id:tag.id,
       },
     },
+  })
+
+  //最終出力
+  res.status(200).json({
+    title:"",
+    introduction:"",
+    imageUrl:"",
+    tags:{
+      id:"",
+      name:"",
+      slug:"",
+    }
   })
 }
 
