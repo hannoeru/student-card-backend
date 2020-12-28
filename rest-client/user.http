@@ -1,5 +1,18 @@
 GET http://localhost:3000/api/v1/user/me HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2oydHkyNWowMDA3bGgxYXBjc2s2bDh1IiwiaWF0IjoxNjA4ODEzMzc2fQ.nm-1mB6JmVn3zS4M60I5BJUel3fSM-FHIjPeEPn-NmM
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2o4cDl4a2cwMDAwN2QxYXo1cm0zaDlvIiwiaWF0IjoxNjA5MTY4MzUxfQ.5ZQMWAKDcDch_vLyfu0KfyKbwSl6ha38EJDkKV7xQCE
 
 ###
+
+POST http://localhost:3000/api/v1/user/card HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2o4cDl4a2cwMDAwN2QxYXo1cm0zaDlvIiwiaWF0IjoxNjA5MTY4MzUxfQ.5ZQMWAKDcDch_vLyfu0KfyKbwSl6ha38EJDkKV7xQCE
+content-type: application/json
+
+{
+  "studentNumber": "20c1010019",
+  "department": "スーパーITエンジニア"
+}
+
+###
+
+GET http://localhost:3000/api/v1/user/card HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2o4cDl4a2cwMDAwN2QxYXo1cm0zaDlvIiwiaWF0IjoxNjA5MTY4MzUxfQ.5ZQMWAKDcDch_vLyfu0KfyKbwSl6ha38EJDkKV7xQCE
