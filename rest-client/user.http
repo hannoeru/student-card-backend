@@ -1,10 +1,25 @@
-GET http://localhost:3000/api/v1/user/me HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2o4cDl4a2cwMDAwN2QxYXo1cm0zaDlvIiwiaWF0IjoxNjA5MTY4MzUxfQ.5ZQMWAKDcDch_vLyfu0KfyKbwSl6ha38EJDkKV7xQCE
+@baseUrl=http://localhost:3000/api/v1/user
+
+# @name login
+POST {{baseUrl}}/login HTTP/1.1
+content-type: application/json
+
+{
+  "email": "20c1010019rh@edu.tech.ac.jp",
+  "password": "password"
+}
 
 ###
 
-POST http://localhost:3000/api/v1/user/card HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2o4cDl4a2cwMDAwN2QxYXo1cm0zaDlvIiwiaWF0IjoxNjA5MTY4MzUxfQ.5ZQMWAKDcDch_vLyfu0KfyKbwSl6ha38EJDkKV7xQCE
+@authToken = {{login.response.body.authToken}}
+
+GET {{baseUrl}}/me HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+###
+
+POST {{baseUrl}}/card HTTP/1.1
+Authorization: Bearer {{authToken}}
 content-type: application/json
 
 {
@@ -14,5 +29,5 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3000/api/v1/user/card HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2o4cDl4a2cwMDAwN2QxYXo1cm0zaDlvIiwiaWF0IjoxNjA5MTY4MzUxfQ.5ZQMWAKDcDch_vLyfu0KfyKbwSl6ha38EJDkKV7xQCE
+GET {{baseUrl}}/card HTTP/1.1
+Authorization: Bearer {{authToken}}
