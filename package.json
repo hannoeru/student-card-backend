@@ -9,7 +9,8 @@
     "dev": "nodemon --watch src --ext ts,js,json,graphql --exec ts-node -r tsconfig-paths/register src/index.ts",
     "migrate": "prisma migrate dev --preview-feature",
     "g:prisma": "prisma generate",
-    "prisma": "npx pnpm migrate && npx pnpm g:prisma"
+    "prisma": "npx pnpm migrate && npx pnpm g:prisma",
+    "seed:school": "ts-node -r tsconfig-paths/register seeders/school"
   },
   "repository": {
     "type": "git",
