@@ -22,6 +22,15 @@ const createNewStudentCard: RequestHandler = async(req, res, next) => {
   if (!user.schoolId)
     return next(new ErrorResponse('please join one school before create a student card.', 400))
 
+  const exist = prisma.studentIDCard.findFirst({
+    where: {
+      userId: user.id,
+    },
+  })
+
+  if (exist)
+    return next(new ErrorResponse('Student ID card is already created', 400))
+
   const card = await prisma.studentIDCard.create({
     data: {
       name: user.name,
@@ -38,15 +47,11 @@ const createNewStudentCard: RequestHandler = async(req, res, next) => {
         },
       },
     },
-    include: {
-      user: true,
-      school: true,
-    },
   })
 
   res.status(200).json({
     success: true,
-    card,
+    message: 'Please wait teachers to approve this student ID card',
   })
 }
 
@@ -56,22 +61,45 @@ const getStudentCard: RequestHandler = async(req, res, next) => {
   if (!user.schoolId)
     return next(new ErrorResponse('please join one school first.', 400))
 
-  const card = await prisma.studentIDCard.findFirst({
+  const result = await prisma.studentIDCard.findFirst({
     where: {
       userId: user.id,
     },
     include: {
-      user: true,
-      school: true,
+      user: {
+        select: {
+          name: true,
+          birthdate: true,
+        },
+      },
+      school: {
+        select: {
+          name: true,
+          code: true,
+          address: true,
+          phone: true,
+          logo: true,
+          headOfSchool: true,
+        },
+      },
     },
   })
 
-  if (!card.approved)
+  if (!result.approved)
     return next(new ErrorResponse('Your student ID card has not yet been approved.', 403))
 
   res.status(200).json({
     success: true,
-    card,
+    card: {
+      issue_date: result.updatedAt,
+      student: {
+        name: result.name,
+        number: result.studentNumber,
+        department: result.department,
+        birthdate: result.user.birthdate,
+      },
+      school: result.school,
+    },
   })
 }
 
