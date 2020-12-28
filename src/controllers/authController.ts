@@ -4,30 +4,33 @@ import { hashPassword, matchPassword, ErrorResponse, sendTokenResponse } from '@
 import { ModelUser } from '@/db.types'
 
 interface NewAccountArgs {
-  studentNumber: string
   name: string
+  username: string
   birthdate: Date
   email: string
   password: string
+  schoolCode: string
 }
 interface LoginArgs {
-  email: string
+  email?: string
+  username?: string
   password: string
 }
 
 const userLogin: RequestHandler = async(req, res, next) => {
-  const {
-    email,
-    password,
-  } = req.body as LoginArgs
+  const { username, email, password }: LoginArgs = req.body
+  let where = {}
 
-  if (!email || !password)
-    return next(new ErrorResponse('Please provide an email and password', 400))
+  if (!password || (!email && !username))
+    return next(new ErrorResponse('Please provide username or email and password', 400))
+
+  if (email)
+    where = { email }
+  else if (username)
+    where = { username }
 
   const savedUser = await prisma.user.findUnique({
-    where: {
-      email,
-    },
+    where,
     select: {
       id: true,
       password: true,
@@ -47,23 +50,29 @@ const userLogin: RequestHandler = async(req, res, next) => {
 
 const createNewAccount: RequestHandler = async(req, res, next) => {
   const {
-    studentNumber,
     name,
+    username,
     birthdate,
     email,
     password,
+    schoolCode,
   } = req.body as NewAccountArgs
 
-  if (!studentNumber || !name || !birthdate || !email || !password)
+  if (!name || !username || !birthdate || !email || !password || !schoolCode)
     return next(new ErrorResponse('Incorrect data format', 400))
 
   const user = await prisma.user.create({
     data: {
-      studentNumber,
       name,
+      username,
       birthdate,
       email,
       password,
+      school: {
+        connect: {
+          code: schoolCode,
+        },
+      },
     },
   })
   sendTokenResponse(user.id, res)
