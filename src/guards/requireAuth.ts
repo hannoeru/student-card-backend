@@ -3,7 +3,7 @@ import { ModelUser } from '@/db.types'
 import { prisma } from '@/prisma'
 import { ErrorResponse, parseSecureToken } from '@/lib'
 
-export const requireAuth: RequestHandler = async(req, res, next): Promise<void> => {
+export const requireAuth: RequestHandler = async(req, res, next) => {
   let token
   const authHeader = req.headers.authorization
 
