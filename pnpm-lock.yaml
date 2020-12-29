@@ -319,10 +319,6 @@ packages:
   /@types/node/14.14.16:
     dev: true
     resolution:
-      integrity: sha512-UHnOPWVWV1z+VV8k6L1HhG7UbGBgIdghqF3l9Ny9ApPghbjICXkUJSd/b9gOgQfjM1r+37cipdw/HJ3F6ICEnQ==
-  /@types/node/14.14.16:
-    dev: true
-    resolution:
       integrity: sha512-naXYePhweTi+BMv11TgioE2/FXU4fSl29HAH1ffxVciNsH3rYXjNP2yM8wqmSm7jS20gM8TIklKiTen+1iVncw==
   /@types/normalize-package-data/2.4.0:
     dev: true
