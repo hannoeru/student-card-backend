@@ -1,5 +1,33 @@
-GET http://localhost:3000/api/v1/user/me HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJja2oydHkyNWowMDA3bGgxYXBjc2s2bDh1IiwiaWF0IjoxNjA4ODEzMzc2fQ.nm-1mB6JmVn3zS4M60I5BJUel3fSM-FHIjPeEPn-NmM
+@baseUrl=http://localhost:3000/api/v1/user
 
+# @name login
+POST {{baseUrl}}/login HTTP/1.1
+content-type: application/json
+
+{
+  "email": "20c1010019rh@edu.tech.ac.jp",
+  "password": "password"
+}
 
 ###
+
+@authToken = {{login.response.body.authToken}}
+
+GET {{baseUrl}}/me HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+###
+
+POST {{baseUrl}}/card HTTP/1.1
+Authorization: Bearer {{authToken}}
+content-type: application/json
+
+{
+  "studentNumber": "20c1010019",
+  "department": "スーパーITエンジニア"
+}
+
+###
+
+GET {{baseUrl}}/card HTTP/1.1
+Authorization: Bearer {{authToken}}

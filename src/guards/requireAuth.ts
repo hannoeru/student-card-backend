@@ -1,9 +1,7 @@
 import { RequestHandler } from 'express'
-import { ModelMember, ModelUser } from '@/db.types'
+import { ModelUser } from '@/db.types'
 import { prisma } from '@/prisma'
 import { ErrorResponse, parseSecureToken } from '@/lib'
-
-export type ModelUserWithMembers = ModelUser & { members: ModelMember[] }
 
 export const requireAuth: RequestHandler = async(req, res, next): Promise<void> => {
   let token
@@ -21,11 +19,8 @@ export const requireAuth: RequestHandler = async(req, res, next): Promise<void> 
   if (!authUser)
     return next(new ErrorResponse('Authentication Error'))
 
-  const user: ModelUserWithMembers = await prisma.user.findUnique({
+  const user: ModelUser = await prisma.user.findUnique({
     where: { id: authUser.userId },
-    include: {
-      members: true,
-    },
   })
   if (!user)
     return next(new ErrorResponse('User not found'))

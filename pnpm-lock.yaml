@@ -21,6 +21,7 @@ devDependencies:
   '@types/cookie-parser': 1.4.2
   '@types/cors': 2.8.9
   '@types/express': 4.17.9
+  '@types/express-serve-static-core': 4.17.17
   '@types/hpp': 0.2.1
   '@types/jsonwebtoken': 8.5.0
   '@types/morgan': 1.9.2
@@ -315,6 +316,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-edtGMEdit146JwwIeyQeHHg9yID4WSolQPxpEorHmN3KuytuCHyn2ELNr5Uxy8SerniFbbkmgKMrGM933am5BQ==
+  /@types/node/14.14.16:
+    dev: true
+    resolution:
+      integrity: sha512-UHnOPWVWV1z+VV8k6L1HhG7UbGBgIdghqF3l9Ny9ApPghbjICXkUJSd/b9gOgQfjM1r+37cipdw/HJ3F6ICEnQ==
   /@types/node/14.14.16:
     dev: true
     resolution:
@@ -3753,6 +3758,7 @@ specifiers:
   '@types/cookie-parser': ^1.4.2
   '@types/cors': ^2.8.9
   '@types/express': ^4.17.9
+  '@types/express-serve-static-core': ^4.17.17
   '@types/hpp': ^0.2.1
   '@types/jsonwebtoken': ^8.5.0
   '@types/morgan': ^1.9.2
