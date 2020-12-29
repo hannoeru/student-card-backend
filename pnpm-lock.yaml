@@ -9,6 +9,7 @@ dependencies:
   helmet: 4.3.1
   hpp: 0.2.3
   jsonwebtoken: 8.5.1
+  limax: 2.1.0
   morgan: 1.10.0
   passport: 0.4.1
   passport-github: 1.1.0
@@ -740,6 +741,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==
+  /bulk-replace/0.0.1:
+    dev: false
+    resolution:
+      integrity: sha1-8JVoKolqvUs9ngjeQJzCIuIT+d0=
   /bytes/3.1.0:
     dev: false
     engines:
@@ -879,6 +884,14 @@ packages:
     dev: true
     resolution:
       integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+  /commander/1.1.1:
+    dependencies:
+      keypress: 0.1.0
+    dev: false
+    engines:
+      node: '>= 0.6.x'
+    resolution:
+      integrity: sha1-UNFlGGiuYOzP8KLZ80WVN2vGsEE=
   /concat-map/0.0.1:
     resolution:
       integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
@@ -2225,6 +2238,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==
+  /keypress/0.1.0:
+    dev: false
+    resolution:
+      integrity: sha1-SjGI1CkbZrT2XtuZ+AaqmuKTWSo=
   /keyv/3.1.0:
     dependencies:
       json-buffer: 3.0.0
@@ -2248,6 +2265,16 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==
+  /limax/2.1.0:
+    dependencies:
+      hepburn: 1.2.0
+      pinyin: 2.9.1
+      speakingurl: 14.0.1
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-OQdMI5PlkGb/UYQz/AiF7C8ybx7JV2LV3FubzIHRB/amFuzuM+//wxGyUrdG6eutIfDTsD7C9hLDFMuB8+HG5Q==
   /lines-and-columns/1.1.6:
     dev: true
     resolution:
@@ -2498,6 +2525,23 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-jZ2+KJZKSsVxLpExZCEHxx6Q7EA=
+  /node-pre-gyp/0.14.0:
+    dependencies:
+      detect-libc: 1.0.3
+      mkdirp: 0.5.5
+      needle: 2.5.2
+      nopt: 4.0.3
+      npm-packlist: 1.4.8
+      npmlog: 4.1.2
+      rc: 1.2.8
+      rimraf: 2.7.1
+      semver: 5.7.1
+      tar: 4.4.13
+    dev: false
+    hasBin: true
+    optional: true
+    resolution:
+      integrity: sha512-+CvDC7ZttU/sSt9rFjix/P05iS43qHCOOGzcr3Ry99bXG7VX953+vFyEuph/tfqoYu8dttBkE86JSKBO2OzcxA==
   /node-pre-gyp/0.15.0:
     dependencies:
       detect-libc: 1.0.3
@@ -2514,6 +2558,17 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-7QcZa8/fpaU/BKenjcaeFF9hLz2+7S9AqyXFhlH/rilsQ/hPZKK32RtR5EQHJElgu+q5RfbJ34KriI79UWaorA==
+  /nodejieba/2.5.1:
+    dependencies:
+      node-addon-api: 3.1.0
+      node-pre-gyp: 0.14.0
+    dev: false
+    engines:
+      node: '>= 10.20.0'
+    optional: true
+    requiresBuild: true
+    resolution:
+      integrity: sha512-VnJBQSl2G8swDf3ZAXMbXrMCrGFO+kVKbkB93OaBthGbEG5BrxfD8I2m7auaRX8E5C1t+hlwo3HCmQOWKkiZ9A==
   /nodemon/2.0.6:
     dependencies:
       chokidar: 3.4.3
@@ -2912,6 +2967,16 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-7RQaasBDqEnqWISY59yosVMw6Qw=
+  /pinyin/2.9.1:
+    dependencies:
+      commander: 1.1.1
+      object-assign: 4.1.1
+    dev: false
+    hasBin: true
+    optionalDependencies:
+      nodejieba: 2.5.1
+    resolution:
+      integrity: sha512-U7kHlVP6yUYl2DV2bX4brlYWdgaAlwtqJrdkboiyri9ixRDVqVO3LD98te3PT5deN5EA9W8ywuG9GaYZfiiIlw==
   /pirates/4.0.1:
     dependencies:
       node-modules-regexp: 1.0.0
@@ -3318,6 +3383,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-U+MTEOO0AiDzxwFvoa4JVnMV6mZlJKk2sBLt90s7G0Gd0Mlknc7kxEn3nuDPNZRta7O2uy8oLcZLVT+4sqNZHQ==
+  /speakingurl/14.0.1:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-1POYv7uv2gXoyGFpBCmpDVSNV74IfsWlDW216UPjbWufNf+bSU6GdbDsxdcxtfwb4xlI3yxzOTKClUosxARYrQ==
   /sprintf-js/1.0.3:
     dev: true
     resolution:
@@ -3773,6 +3844,7 @@ specifiers:
   helmet: ^4.3.1
   hpp: ^0.2.3
   jsonwebtoken: ^8.5.1
+  limax: ^2.1.0
   morgan: ^1.10.0
   nodemon: ^2.0.6
   passport: ^0.4.1
