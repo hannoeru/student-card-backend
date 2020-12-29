@@ -63,8 +63,8 @@ const createNewAccount: RequestHandler = async(req, res, next) => {
 
   const school = await prisma.school.findUnique({
     where: {
-      code: schoolCode
-    }
+      code: schoolCode,
+    },
   })
 
   if (!school)
