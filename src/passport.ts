@@ -5,13 +5,14 @@ import { Strategy as GitHubStrategy } from 'passport-github'
 import { Strategy as TwitterStrategy } from 'passport-twitter'
 import { sendTokenResponse } from '@/lib'
 import { prisma } from './prisma'
+import { ModelUser } from './db.types'
 
 export function initPassport() {
-  passport.serializeUser<any, string>((user, done) => {
+  passport.serializeUser<string>((user: ModelUser, done) => {
     done(null, user.id)
   })
 
-  passport.deserializeUser<any, string>((id, done) => {
+  passport.deserializeUser<string>((id, done) => {
     prisma.user
       .findUnique({
         where: {
