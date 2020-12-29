@@ -1877,6 +1877,14 @@ packages:
       node: '>=10.0.0'
     resolution:
       integrity: sha512-WsafDyKsIexB0+pUNkq3rL1rB5GVAghR68TP8ssM9DPEMzfBiluEQlVzJ/FEj6Vq2Ag3CNuxf7aYMjXrN0X49Q==
+  /hepburn/1.2.0:
+    dependencies:
+      bulk-replace: 0.0.1
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha512-xWjHb03dN/ivNcqG2vqA//sHQ0oapYGZ9QV/2TR7m2+cggxzoVpbDxZn9s/Zm1tF88/7a1IpdZyn00tNP5oABA==
   /hosted-git-info/2.8.8:
     dev: true
     resolution:
