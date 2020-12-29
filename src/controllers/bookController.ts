@@ -37,19 +37,19 @@ const addNewBook: RequestHandler = async(req, res, next) => {
     })
   }
   prisma.book.create({
-    user: {
-      connect: {
-        id: user.id,
-      },
-    },
     data: {
       title,
       introduction,
       imageUrl,
-    },
-    tags: {
-      connect: {
-        id: tag.id,
+      user: {
+        connect: {
+          id: user.id,
+        },
+      },
+      tags: {
+        connect: {
+          id: tag.id,
+        },
       },
     },
   })
