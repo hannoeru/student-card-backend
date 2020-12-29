@@ -57,7 +57,6 @@ model StudentIDCard {
   id            String   @id @default(cuid())
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
-  name          String
   studentNumber String   @unique @map("student_number")
   department    String
   approved      Boolean  @default(false)

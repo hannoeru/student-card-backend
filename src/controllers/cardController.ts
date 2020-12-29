@@ -33,7 +33,6 @@ const createNewStudentCard: RequestHandler = async(req, res, next) => {
 
   const card = await prisma.studentIDCard.create({
     data: {
-      name: user.name,
       studentNumber,
       department,
       user: {
@@ -93,7 +92,7 @@ const getStudentCard: RequestHandler = async(req, res, next) => {
     card: {
       issue_date: result.updatedAt,
       student: {
-        name: result.name,
+        name: result.user.name,
         number: result.studentNumber,
         department: result.department,
         birthdate: result.user.birthdate,
