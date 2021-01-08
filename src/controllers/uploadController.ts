@@ -61,18 +61,6 @@ const uploadImage: RequestHandler = async(req, res, next) => {
   })
 }
 
-const getImage: RequestHandler = async(req, res, next) => {
-  const user: ModelUser = (req as any).user
-
-  const id = req.params.id
-
-  res.status(200).json({
-    success: true,
-    user,
-  })
-}
-
 export {
   uploadImage,
-  getImage,
 }
