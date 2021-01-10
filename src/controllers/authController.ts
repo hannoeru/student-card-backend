@@ -61,6 +61,15 @@ const createNewAccount: RequestHandler = async(req, res, next) => {
   if (!name || !username || !birthdate || !email || !password || !schoolCode)
     return next(new ErrorResponse('Incorrect data format', 400))
 
+  const school = await prisma.school.findUnique({
+    where: {
+      code: schoolCode,
+    },
+  })
+
+  if (!school)
+    return next(new ErrorResponse('No School Found', 404))
+
   const user = await prisma.user.create({
     data: {
       name,
@@ -70,7 +79,7 @@ const createNewAccount: RequestHandler = async(req, res, next) => {
       password,
       school: {
         connect: {
-          code: schoolCode,
+          id: school.id,
         },
       },
     },
