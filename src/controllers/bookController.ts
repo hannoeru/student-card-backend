@@ -36,7 +36,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
       },
     })
   }
-  prisma.book.create({
+  const book = await prisma.book.create({
     data: {
       title,
       introduction,
@@ -53,16 +53,14 @@ const addNewBook: RequestHandler = async(req, res, next) => {
       },
     },
   })
-
-  // 最終出力
   res.status(200).json({
-    title: '',
-    introduction: '',
-    imageUrl: '',
+    title:book.title,
+    introduction:book.introduction,
+    imageUrl:book.imageUrl,
     tags: {
-      id: '',
-      name: '',
-      slug: '',
+      id: tag.id,
+      name: tag.name,
+      slug: tag.slug,
     },
   })
 }
