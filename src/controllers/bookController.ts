@@ -23,17 +23,17 @@ const addNewBook: RequestHandler = async(req, res, next) => {
   const user: ModelUser = (req as any).user
   if (!title || !introduction || !imageUrl || !tag)
     return next(new ErrorResponse('Incorrect data format', 400))
-  const tags=[]
-  const buildTags=[]
-  for (let i=0;i<tag.length;i++) {
+  const tags = []
+  const buildTags = []
+  for (let i = 0; i < tag.length; i++ ) {
     let book_tag = await prisma.bookTag.findFirst({
       where: {
         name: tag[i],
       },
       select: {
         id: true,
-        name:true,
-        slug:true,
+        name: true,
+        slug: true,
       }
     })
     if (!book_tag) {
@@ -43,9 +43,9 @@ const addNewBook: RequestHandler = async(req, res, next) => {
           slug: slug(tag[i]),
         },
         select: {
-          id:true,
-          name:true,
-          slug:true,
+          id: true,
+          name: true,
+          slug: true,
         }
       })
     }
@@ -68,9 +68,9 @@ const addNewBook: RequestHandler = async(req, res, next) => {
     },
   })
   res.status(200).json({
-    title:book.title,
+    title: book.title,
     introduction: book.introduction,
-    imageUrl:book.imageUrl,
+    imageUrl: book.imageUrl,
     tags,
   })
 }
