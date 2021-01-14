@@ -31,7 +31,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
         name: tag[i],
       },
       select: {
-        id:true,
+        id: true,
         name:true,
         slug:true,
       }
