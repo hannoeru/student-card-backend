@@ -71,7 +71,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
     title:book.title,
     introduction: book.introduction,
     imageUrl:book.imageUrl,
-    tags:tags
+    tags:tags,
   })
 }
 export {
