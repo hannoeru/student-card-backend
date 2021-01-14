@@ -63,7 +63,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
         },
       },
       tags:{
-        connect: buildTags
+        connect: buildTags,
       },
     },
   })
