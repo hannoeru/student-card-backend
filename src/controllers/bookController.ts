@@ -67,7 +67,6 @@ const addNewBook: RequestHandler = async(req, res, next) => {
       }
     },
   })
-  //特に手を加えてないので作成日時も飛ぶ
   res.status(200).json({
     title:book.title,
     introduction:book.introduction,
@@ -75,7 +74,6 @@ const addNewBook: RequestHandler = async(req, res, next) => {
     tags:tags
   })
 }
-
 export {
   addNewBook,
 }
