@@ -64,7 +64,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
       },
       tags:{
         connect:buildTags
-      }
+      },
     },
   })
   res.status(200).json({
