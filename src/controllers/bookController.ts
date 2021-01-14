@@ -23,7 +23,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
   const user: ModelUser = (req as any).user
   if (!title || !introduction || !imageUrl || !tag)
     return next(new ErrorResponse('Incorrect data format', 400))
-  let tags=[]
+  const tags=[]
   let buildTags=[]
   for(let i=0;i<tag.length;i++){
     let book_tag = await prisma.bookTag.findFirst({
