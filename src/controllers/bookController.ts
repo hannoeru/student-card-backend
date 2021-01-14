@@ -19,7 +19,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
     introduction,
     imageUrl,
   } = req.body as AddBookArgs
-  const tag=req.body.tags as string
+  const tag = req.body.tags as string
   const user: ModelUser = (req as any).user
   if (!title || !introduction || !imageUrl || !tag)
     return next(new ErrorResponse('Incorrect data format', 400))
