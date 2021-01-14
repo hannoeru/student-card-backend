@@ -30,6 +30,11 @@ const addNewBook: RequestHandler = async(req, res, next) => {
       where: {
         name: tag[i],
       },
+      select: {
+        id:true,
+        name:true,
+        slug:true,
+      }
     })
     if (!book_tag) {
       book_tag = await prisma.bookTag.create({
@@ -37,6 +42,11 @@ const addNewBook: RequestHandler = async(req, res, next) => {
           name: tag[i],
           slug: slug(tag[i]),
         },
+        select: {
+          id:true,
+          name:true,
+          slug:true,
+        }
       })
     }
     tags.push(book_tag)
