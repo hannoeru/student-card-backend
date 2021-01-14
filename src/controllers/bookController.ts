@@ -69,7 +69,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
   })
   res.status(200).json({
     title:book.title,
-    introduction:book.introduction,
+    introduction: book.introduction,
     imageUrl:book.imageUrl,
     tags:tags
   })
