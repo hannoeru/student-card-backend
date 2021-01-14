@@ -24,6 +24,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
   if (!title || !introduction || !imageUrl || !tag)
     return next(new ErrorResponse('Incorrect data format', 400))
   let tags=[]
+  let buildTags=[]
   for(let i=0;i<tag.length;i++){
     let book_tag = await prisma.bookTag.findFirst({
       where: {
@@ -39,6 +40,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
       })
     }
     tags.push(book_tag)
+    buildTags.push({id:book_tag.id}) 
   }
   const book = await prisma.book.create({
     data: {
@@ -51,9 +53,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
         },
       },
       tags:{
-        connect:{
-          id:tags[0].id //一つだけ？？？
-        }
+        connect:buildTags
       }
     },
   })
