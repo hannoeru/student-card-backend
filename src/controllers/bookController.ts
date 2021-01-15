@@ -18,62 +18,55 @@ const addNewBook: RequestHandler = async(req, res, next) => {
     title,
     introduction,
     imageUrl,
+    tags,
   } = req.body as AddBookArgs
-  const tag = req.body.tags as string
   const user: ModelUser = (req as any).user
-  if (!title || !introduction || !imageUrl || !tag)
+  if (!title || !introduction || !imageUrl || !tags)
     return next(new ErrorResponse('Incorrect data format', 400))
-  const tags = []
-  const buildTags = []
-  for (let i = 0; i < tag.length; i++) {
-    let book_tag = await prisma.bookTag.findFirst({
-      where: {
-        name: tag[i],
+  let tag = await prisma.bookTag.findFirst({
+    where: {
+      name: tags.name,
+    },
+  })
+  if (!tag) {
+    tag = await prisma.bookTag.create({
+      data: {
+        name: tags.name,
+        slug: slug(tags.name),
       },
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-      }
     })
-    if (!book_tag) {
-      book_tag = await prisma.bookTag.create({
-        data: {
-          name: tag[i],
-          slug: slug(tag[i]),
-        },
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-        }
-      })
-    }
-    tags.push(book_tag)
-    buildTags.push({id:book_tag.id}) 
   }
-  const book = await prisma.book.create({
+  prisma.book.create({
+    user: {
+      connect: {
+        id: user.id,
+      },
+    },
     data: {
       title,
       introduction,
       imageUrl,
-      user: {
-        connect: {
-          id: user.id,
-        },
-      },
-      tags:{
-        connect: buildTags,
+    },
+    tags: {
+      connect: {
+        id: tag.id,
       },
     },
   })
+
+  // 最終出力
   res.status(200).json({
-    title: book.title,
-    introduction: book.introduction,
-    imageUrl: book.imageUrl,
-    tags,
+    title: '',
+    introduction: '',
+    imageUrl: '',
+    tags: {
+      id: '',
+      name: '',
+      slug: '',
+    },
   })
 }
+
 export {
   addNewBook,
 }
