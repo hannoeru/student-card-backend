@@ -10,8 +10,7 @@
     "migrate": "prisma migrate dev --preview-feature",
     "g:prisma": "prisma generate",
     "prisma": "npx pnpm migrate && npx pnpm g:prisma",
-    "seed:school": "ts-node -r tsconfig-paths/register seeders/school",
-    "postinstall": "husky install"
+    "seed:school": "ts-node -r tsconfig-paths/register seeders/school"
   },
   "repository": {
     "type": "git",
