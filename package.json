@@ -76,7 +76,7 @@
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": "eslint --fix"
+    "*": "eslint --fix"
   },
   "eslintConfig": {
     "extends": "@antfu/eslint-config-ts",
