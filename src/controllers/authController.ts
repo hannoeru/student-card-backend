@@ -52,12 +52,11 @@ const createNewAccount: RequestHandler = async(req, res, next) => {
   const {
     name,
     username,
-    birthdate,
     email,
     password,
     schoolCode,
   } = req.body as NewAccountArgs
-
+  const birthdate = new Date(req.body.birthdate)
   if (!name || !username || !birthdate || !email || !password || !schoolCode)
     return next(new ErrorResponse('Incorrect data format', 400))
 
