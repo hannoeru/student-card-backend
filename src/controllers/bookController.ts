@@ -34,7 +34,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
         id: true,
         name: true,
         slug: true,
-      }
+      },
     })
     if (!book_tag) {
       book_tag = await prisma.bookTag.create({
@@ -46,11 +46,11 @@ const addNewBook: RequestHandler = async(req, res, next) => {
           id: true,
           name: true,
           slug: true,
-        }
+        },
       })
     }
     tags.push(book_tag)
-    buildTags.push({id:book_tag.id}) 
+    buildTags.push({ id: book_tag.id })
   }
   const book = await prisma.book.create({
     data: {
@@ -62,7 +62,7 @@ const addNewBook: RequestHandler = async(req, res, next) => {
           id: user.id,
         },
       },
-      tags:{
+      tags: {
         connect: buildTags,
       },
     },
