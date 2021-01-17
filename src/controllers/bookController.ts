@@ -16,12 +16,12 @@ const addNewBook: RequestHandler = async(req, res, next) => {
   } = req.body as AddBookArgs
   let tag = req.body.tags as string[]
   const user: ModelUser = (req as any).user
-  const tags = [] 
+  const tags = []
   const buildTags = []
-  for (let i = 0; i < tag.length; i++) {
-    tag[i]=tag[i].replace(/\s+/g, "");
-  }
-  tag=tag.filter(tag => tag!="")
+  for (let i = 0; i < tag.length; i++)
+    tag[i] = tag[i].replace(/\s+/g, '')
+
+  tag = tag.filter(tag => tag !== '')
   if (!title || !introduction || !imageUrl || !tag)
     return next(new ErrorResponse('Incorrect data format', 400))
   for (let i = 0; i < tag.length; i++) {
